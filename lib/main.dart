@@ -5,7 +5,7 @@ void main() {
   runApp(const HealthApp());
 }
 
-// Main app configuration
+
 class HealthApp extends StatelessWidget {
   const HealthApp({super.key});
 
@@ -13,35 +13,37 @@ class HealthApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'AI Health Assistant',
-      debugShowCheckedModeBanner: false, // Hide debug banner
+      debugShowCheckedModeBanner: false, 
+
+
       theme: ThemeData(
-        // A friendly color scheme based on indigo/purple
+        
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF6366F1), // Primary indigo
+          seedColor: const Color(0xFF6366F1), 
           primary: const Color(0xFF6366F1),
           secondary: const Color(0xFF4F46E5),
-          tertiary: const Color(0xFF7C3AED), // Purple accent
+          tertiary: const Color(0xFF7C3AED),
           surface: Colors.white,
-          background: const Color(0xFFF9FAFB), // Light gray background
+          background: const Color(0xFFF9FAFB), 
           onPrimary: Colors.white,
         ),
-        useMaterial3: true, // Use latest Material design
+        useMaterial3: true, 
         fontFamily: 'Roboto',
         
-        // Nice, friendly buttons
+        
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color(0xFF6366F1),
             foregroundColor: Colors.white,
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12), // Rounded corners
+              borderRadius: BorderRadius.circular(12), 
             ),
-            elevation: 0, // Flat design
+            elevation: 0, 
           ),
         ),
         
-        // Soft cards with subtle borders
+        
         cardTheme: CardTheme(
           elevation: 0,
           shape: RoundedRectangleBorder(
@@ -72,27 +74,28 @@ class _SymptomCheckerState extends State<SymptomChecker> {
 
   @override
   void dispose() {
-    // Clean up resources
+    
     symptomInputController.dispose();
     super.dispose();
   }
 
-  // Ask the AI about the symptoms
-  void checkSymptoms() async {
-    // Don't do anything if symptoms are empty
-    if (symptomInputController.text.isEmpty) return;
 
-    // Show loading state
+  void checkSymptoms() async {
+    
+    if (symptomInputController.text.isEmpty) 
+      return;
+
+   
     setState(() {
       isWaitingForResponse = true;
       aiResponseText = "";
     });
 
-    // Get AI analysis
+    
     String analysisResult = await aiService.getAIResponse(
         "Analyze these symptoms: ${symptomInputController.text}. What might be the cause?");
     
-    // Show results
+   
     setState(() {
       aiResponseText = analysisResult;
       isWaitingForResponse = false;
@@ -106,7 +109,7 @@ class _SymptomCheckerState extends State<SymptomChecker> {
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
-            // Pretty header with gradient
+            
             SliverAppBar(
               expandedHeight: 150,
               pinned: true,
@@ -125,8 +128,8 @@ class _SymptomCheckerState extends State<SymptomChecker> {
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        Color(0xFF6366F1), // Indigo
-                        Color(0xFF7C3AED), // Purple
+                        Color(0xFF6366F1), 
+                        Color(0xFF7C3AED), 
                       ],
                     ),
                   ),
@@ -160,14 +163,14 @@ class _SymptomCheckerState extends State<SymptomChecker> {
                     ),
                     const SizedBox(height: 24),
                     
-                    // Symptom input card
+                    
                     Card(
                       child: Padding(
                         padding: const EdgeInsets.all(20),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Card header with icon
+                            
                             Row(
                               children: [
                                 const Icon(
@@ -188,11 +191,11 @@ class _SymptomCheckerState extends State<SymptomChecker> {
                             ),
                             const SizedBox(height: 16),
                             
-                            // Symptoms text field
+                            
                             TextField(
                               controller: symptomInputController,
                               onChanged: (value) {
-                                setState(() {});  // Refresh UI when text changes
+                                setState(() {});  
                               },
                               maxLines: 5,
                               style: const TextStyle(
@@ -235,7 +238,7 @@ class _SymptomCheckerState extends State<SymptomChecker> {
                               width: double.infinity,
                               child: ElevatedButton(
                                 onPressed: symptomInputController.text.isEmpty || isWaitingForResponse
-                                    ? null  // Disable when empty or loading
+                                    ? null  
                                     : checkSymptoms,
                                 style: ElevatedButton.styleFrom(
                                   disabledBackgroundColor: Colors.grey.shade300,
@@ -264,7 +267,7 @@ class _SymptomCheckerState extends State<SymptomChecker> {
                       ),
                     ),
                     
-                    // AI response area (only shown when there's a response)
+                    // AI response box
                     if (aiResponseText.isNotEmpty) ...[
                       const SizedBox(height: 24),
                       Card(
@@ -273,7 +276,7 @@ class _SymptomCheckerState extends State<SymptomChecker> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // Response header with icon
+                              // Respinse
                               Row(
                                 children: [
                                   Container(
@@ -301,7 +304,7 @@ class _SymptomCheckerState extends State<SymptomChecker> {
                               ),
                               const SizedBox(height: 16),
                               
-                              // Response content
+                              // content for the response
                               Container(
                                 padding: const EdgeInsets.all(16),
                                 decoration: BoxDecoration(
@@ -314,18 +317,18 @@ class _SymptomCheckerState extends State<SymptomChecker> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    // AI's response text
+                                    // response from gemini
                                     Text(
                                       aiResponseText,
                                       style: const TextStyle(
                                         fontSize: 16,
                                         color: Color(0xFF374151),
-                                        height: 1.6,  // Line spacing for readability
+                                        height: 1.6,  
                                       ),
                                     ),
                                     const SizedBox(height: 16),
                                     
-                                    // Medical disclaimer
+                                    // Disclaimer
                                     const Text(
                                       'Disclaimer: This is not a medical diagnosis. Please consult a healthcare professional.',
                                       style: TextStyle(
